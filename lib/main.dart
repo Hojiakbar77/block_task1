@@ -1,6 +1,8 @@
 import 'package:block_task1/dog_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'blocs/image_bloc.dart';
 
@@ -19,12 +21,14 @@ class MyApp extends StatelessWidget {
 
         color: Colors.white,
         title: 'Dog Image',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
+
 
 
           primarySwatch: Colors.blue,
         ),
-        home: BlocProvider(
+        home:  BlocProvider(
           create: (context) => ImageBloc()..add(ImageLoadEvent()),
           child: Dogview(),
         )

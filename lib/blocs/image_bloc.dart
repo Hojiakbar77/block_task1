@@ -11,16 +11,16 @@ part 'image_event.dart';
 part 'image_state.dart';
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-  final  _net = Net();
+
   ImageBloc() : super(ImageInitial()) {
     on<ImageEvent>((event, emit) async{
-      if(event is ImageLoadEvent || event is NextImage ){
+      if(event is ImageLoadEvent || event is NextImageEvent  ){
         try{
 
           emit(ImageLoadingState());
 
 
-          final dogs = await _net.getPostsList();
+          final dogs = await getDog();
 
           emit(ImageSuccess(dogs: dogs));
         }

@@ -1,18 +1,13 @@
-class DogModel {
-  String? message;
-  String? status;
+class Dog{
+  final String message;
+  final String status;
+  Dog({required this.message,required this.status});
+  factory Dog.fromJson(Map<String,dynamic>json){
+    return Dog(
+      message: json['message'],
+      status: json['status'],
 
-  DogModel({this.message, this.status});
-
-  DogModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    status = json['status'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
-    return data;
+    );
   }
 }
+

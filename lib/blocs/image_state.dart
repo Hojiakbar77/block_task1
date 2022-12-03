@@ -6,7 +6,8 @@ abstract class ImageState {}
 class ImageInitial extends ImageState {}
 class ImageLoadingState extends ImageState{}
 class ImageSuccess extends ImageState{
-   final   DogModel dogs;
+   final Dog dogs;
+
   ImageSuccess({required this.dogs});
 }
 class ImageFail extends ImageState{

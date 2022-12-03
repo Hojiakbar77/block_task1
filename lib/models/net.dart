@@ -3,27 +3,14 @@ import 'dart:convert';
 import 'dog_model.dart';
 import 'package:http/http.dart' as http;
 
-class Net {
+Future<Dog> getDog() async {
+  final response = await http.get(Uri.parse('https://dog.ceo/api/breeds/image/random'));
 
-  final _baseUrl = 'https://dog.ceo/api/breeds/image/random';
-  Future<DogModel> getPostsList() async {
-    try{
+  if (response.statusCode == 200) {
 
-      final url = Uri.https(_baseUrl,);
-      final response = await http.get(url);
-      if(response.statusCode ==200){
-        final json = jsonDecode(response.body) ;
-        final dogs = json.map((e)=> DogModel.fromJson(e));
-        return dogs;
-      }else{
-        throw Exception('Failed to load post');
-      }
+    return Dog.fromJson(jsonDecode(response.body));
+  } else {
 
+    throw Exception('Failed to load album');
 
-    } catch(e){
-      rethrow;
-    }
-
-
-  }
-}
+  }}

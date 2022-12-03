@@ -1,44 +1,64 @@
-
+import '../models/dog_model.dart';
 import 'package:block_task1/blocs/image_bloc.dart';
-import 'package:block_task1/models/dog_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'models/net.dart';
+
+
 class Dogview extends StatefulWidget {
-   Dogview({Key? key}) : super(key: key);
+   const Dogview({Key? key}) : super(key: key);
 
 
   @override
-  State<Dogview> createState() => _DogviewState();
+  State<Dogview> createState() => DogviewState();
 }
 
-class _DogviewState extends State<Dogview> {
-
+class DogviewState extends State<Dogview> {
+ late Future<Dog>futureDog;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureDog = getDog();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text('Dog image')),),
+      appBar: AppBar(title: const Center(child: Text('Dog image')),),
       body: BlocBuilder<ImageBloc,ImageState>(
         builder: (context,state){
-          if( state is ImageInitial){
-            return FlutterLogo();
+
+           if( state is ImageInitial){
+          return const FlutterLogo();
 
           }
-          if(state is ImageLoadingState){
-            return Center(child: CircularProgressIndicator());
+
+          else if(state is ImageLoadingState){
+          return const Center(child: CircularProgressIndicator());
           }
-          if (state is ImageFail) {
-            Text("error occured");
+          else if (state is ImageFail) {
+          return const Text("da");
           }
-          if(state is ImageSuccess){
+
+          else if(state is ImageSuccess){
             return Center(
+
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
 
                 children: [
-                  Image.network(
-                      state.dogs.message.toString(),height: 400,width: 300,),
-                  TextButton(onPressed: () {}, child: Text("Next"))
+                  SizedBox(
+                    height: 400,
+                    width: 300,
+                    child: Image.network(
+                        state.dogs.message.toString(),),
+                  ),
+                  TextButton(onPressed: (){
+                    context.read<ImageBloc>().add(NextImageEvent());
+                  }, child: const Text("Next"))
+
                 ],
               ),
             );
